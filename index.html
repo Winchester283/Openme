@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy Women's Day 20/10 • Gửi Em & Mẹ Kính Yêu</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0f172a;
+      touch-action: none;
+    }
+    .font-serif-display {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    /* 1. 2.5D PARALLAX DUAL-VIDEO CONTAINER (Seamless Linear Loop + Watermark Crop) */
+    #video-bg-container {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+      perspective: 1100px;
+      background: #111827;
+    }
+    #video-parallax-rig {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .bg-video-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 18%;
+      /* Overscan scale 1.24 + origin center 14% gives full 2.5D tilt headroom and clips bottom Kling watermark */
+      transform: scale(1.24);
+      transform-origin: center 14%;
+      filter: saturate(108%) contrast(102%) brightness(102%);
+      will-change: opacity;
+    }
+
+    /* Subtle cinematic soft vignette over video */
+    .video-vignette {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 42%, rgba(255, 240, 245, 0.03) 0%, rgba(15, 23, 42, 0.32) 100%);
+    }
+
+    /* 2. Transparent Three.js Canvas for Sculpted 3D Petals & Blooms */
+    #scene-container {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      cursor: grab;
+    }
+    #scene-container:active {
+      cursor: grabbing;
+    }
+
+    /* 3. Foreground Optical Macro Bokeh Petals (2.5D Counter-Parallax) */
+    #bokeh-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+      overflow: hidden;
+      will-change: transform;
+    }
+    .bokeh-petal {
+      position: absolute;
+      border-radius: 60% 40% 50% 50% / 65% 55% 45% 35%;
+      filter: blur(18px);
+      opacity: 0.44;
+      transform-origin: center;
+      mix-blend-mode: screen;
+      animation: bokehFloat 9s ease-in-out infinite alternate;
+    }
+    @keyframes bokehFloat {
+      0% { transform: translateY(0px) rotate(0deg) scale(1); }
+      100% { transform: translateY(-24px) rotate(12deg) scale(1.08); }
+    }
+
+    /* 4. 2D Interactive Water Ripple Canvas */
+    #ripple-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    /* Frosted Glass Card Panel */
+    .glass-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 244, 249, 0.82) 100%);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 2px solid rgba(255, 255, 255, 0.96);
+      box-shadow:
+        0 28px 70px rgba(15, 23, 42, 0.34),
+        0 0 48px rgba(244, 114, 182, 0.35),
+        inset 0 1px 2px rgba(255, 255, 255, 0.98);
+    }
+
+    /* Prominent Shimmering Title Effect */
+    @keyframes titleShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .title-glow-banner {
+      background: linear-gradient(90deg, #db2777, #e11d48, #9333ea, #e11d48, #db2777);
+      background-size: 240% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: titleShimmer 5s linear infinite;
+      filter: drop-shadow(0 2px 10px rgba(244, 114, 182, 0.35));
+    }
+
+    /* Pulsing Flower & Heart Border Ornaments */
+    @keyframes pulseOrnamentA {
+      0%, 100% {
+        transform: scale(0.86) rotate(-6deg);
+        filter: drop-shadow(0 2px 6px rgba(244, 114, 182, 0.4));
+      }
+      50% {
+        transform: scale(1.24) rotate(6deg);
+        filter: drop-shadow(0 4px 12px rgba(244, 63, 94, 0.7));
+      }
+    }
+    @keyframes pulseOrnamentB {
+      0%, 100% {
+        transform: scale(1.22) rotate(5deg);
+        filter: drop-shadow(0 4px 12px rgba(236, 72, 153, 0.7));
+      }
+      50% {
+        transform: scale(0.86) rotate(-5deg);
+        filter: drop-shadow(0 2px 6px rgba(244, 114, 182, 0.4));
+      }
+    }
+    .border-ornament-a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulseOrnamentA 2.2s ease-in-out infinite;
+    }
+    .border-ornament-b {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulseOrnamentB 2.2s ease-in-out infinite;
+    }
+
+    /* Center Open Card Button Breathing Glow */
+    @keyframes centerBtnPulse {
+      0%, 100% {
+        box-shadow: 0 14px 40px rgba(236, 72, 153, 0.35), 0 0 0 0 rgba(244, 114, 182, 0.45);
+      }
+      50% {
+        box-shadow: 0 18px 50px rgba(236, 72, 153, 0.50), 0 0 0 12px rgba(244, 114, 182, 0);
+      }
+    }
+    .center-open-btn {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 240, 247, 0.88) 100%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 2px solid rgba(255, 255, 255, 0.98);
+      animation: centerBtnPulse 2.8s infinite ease-in-out;
+    }
+
+    .card-3d-wrap {
+      perspective: 1200px;
+    }
+    .card-3d-inner {
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+      transform-style: preserve-3d;
+    }
+
+    .floating-label {
+      position: fixed;
+      z-index: 25;
+      pointer-events: none;
+      transform: translate(-50%, -100%);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px) saturate(170%);
+      -webkit-backdrop-filter: blur(16px) saturate(170%);
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.25);
+    }
+  </style>
+</head>
+<body class="relative select-none overflow-hidden text-slate-800">
+
+  <!-- 1. DUAL-VIDEO SEAMLESS LINEAR LOOP + 2.5D PARALLAX RIG -->
+  <div id="video-bg-container" aria-label="Video nền cánh đồng hoa Kling 2.5D">
+    <div id="video-parallax-rig">
+      <video id="bg-video-a" class="bg-video-layer" style="opacity: 1; z-index: 2;" autoplay muted playsinline preload="auto">
+        <source src="https://res.cloudinary.com/mjdzogip/video/upload/v1792408845/kling_20261019_VIDEO_T_o_1_vide_4803_0.mp4" type="video/mp4" />
+        <source src="kling_20261019_VIDEO_T_o_1_vide_4803_0.mp4" type="video/mp4" />
+        <source src="background.mp4" type="video/mp4" />
+      </video>
+      <video id="bg-video-b" class="bg-video-layer" style="opacity: 0; z-index: 1;" muted playsinline preload="auto">
+        <source src="https://res.cloudinary.com/mjdzogip/video/upload/v1792408845/kling_20261019_VIDEO_T_o_1_vide_4803_0.mp4" type="video/mp4" />
+        <source src="kling_20261019_VIDEO_T_o_1_vide_4803_0.mp4" type="video/mp4" />
+        <source src="background.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+
+  <!-- Soft Vignette Overlay -->
+  <div class="video-vignette"></div>
+
+  <!-- 2. TRANSPARENT THREE.JS 3D SCULPTED PETALS & BLOOMING FLOWERS OVERLAY -->
+  <div id="scene-container" aria-label="Không gian 2.5D tương tác hoa và sóng nước"></div>
+
+  <!-- 3. OPTICAL FOREGROUND BOKEH PETALS -->
+  <div id="bokeh-layer">
+    <div class="bokeh-petal bg-gradient-to-tr from-pink-400 via-rose-300 to-pink-200 w-52 h-52 -bottom-14 -left-12" style="animation-delay: 0s;"></div>
+    <div class="bokeh-petal bg-gradient-to-tl from-rose-400 via-pink-300 to-amber-200 w-60 h-60 -bottom-16 -right-14" style="animation-delay: -3s;"></div>
+    <div class="bokeh-petal bg-gradient-to-br from-pink-300 via-rose-200 to-purple-200 w-40 h-40 -top-12 -left-10" style="animation-delay: -5s;"></div>
+  </div>
+
+  <!-- 4. 2D INTERACTIVE WATER RIPPLE OVERLAY -->
+  <canvas id="ripple-canvas"></canvas>
+
+  <!-- Floating Compliment Tags on Click -->
+  <div id="floating-labels-container" class="pointer-events-none fixed inset-0 z-20 overflow-hidden"></div>
+
+  <!-- 5. CENTERED "MỞ THIỆP" PROMPT (Shown initially & when card is closed; fades out while rotating scene) -->
+  <div id="open-card-prompt" class="fixed inset-0 z-30 flex items-center justify-center pointer-events-none transition-opacity duration-500 opacity-100">
+    <button id="btn-open-card" type="button" class="center-open-btn pointer-events-auto group relative flex flex-col items-center gap-1.5 rounded-3xl px-8 py-4 sm:px-10 sm:py-5 transition-all duration-300 hover:scale-105 active:scale-95">
+      <div class="flex items-center gap-3">
+        <span class="border-ornament-a text-xl sm:text-2xl">🌸</span>
+        <span class="font-serif-display title-glow-banner text-2xl sm:text-3xl font-bold tracking-wide">
+          Mở Thiệp 20/10
+        </span>
+        <span class="border-ornament-b text-xl sm:text-2xl">💖</span>
+      </div>
+      <span class="text-[11px] sm:text-xs font-semibold tracking-wider text-pink-600/85 uppercase">
+        ✨ Chạm để mở lời chúc yêu thương ✨
+      </span>
+    </button>
+  </div>
+
+  <!-- 6. CENTERPIECE 3D GREETING CARD (No bottom buttons; click outside closes card) -->
+  <main id="greeting-card-wrapper" class="fixed inset-0 z-20 flex items-center justify-center p-4 sm:p-6 pointer-events-none opacity-0 scale-95 transition-all duration-500">
+    <div id="greeting-card" class="card-3d-wrap w-full max-w-lg">
+      <div id="greeting-card-inner" class="card-3d-inner glass-card relative rounded-[2rem] p-6 sm:p-8 overflow-visible">
+
+        <!-- PULSING FLOWER & HEART FRAME BORDER ORNAMENTS -->
+        <!-- Top Border Row -->
+        <div class="pointer-events-none absolute -top-3.5 left-6 right-6 flex items-center justify-between px-2 z-20">
+          <span class="border-ornament-a text-lg sm:text-xl">🌸</span>
+          <span class="border-ornament-b text-base sm:text-lg">💖</span>
+          <span class="border-ornament-a text-lg sm:text-xl">🌷</span>
+          <span class="border-ornament-b text-lg sm:text-xl">💗</span>
+          <span class="border-ornament-a text-lg sm:text-xl">🌸</span>
+          <span class="border-ornament-b text-base sm:text-lg">💖</span>
+          <span class="border-ornament-a text-lg sm:text-xl">🌷</span>
+        </div>
+
+        <!-- Bottom Border Row -->
+        <div class="pointer-events-none absolute -bottom-3.5 left-6 right-6 flex items-center justify-between px-2 z-20">
+          <span class="border-ornament-b text-lg sm:text-xl">🌷</span>
+          <span class="border-ornament-a text-base sm:text-lg">💖</span>
+          <span class="border-ornament-b text-lg sm:text-xl">🌸</span>
+          <span class="border-ornament-a text-lg sm:text-xl">💗</span>
+          <span class="border-ornament-b text-lg sm:text-xl">🌷</span>
+          <span class="border-ornament-a text-base sm:text-lg">💖</span>
+          <span class="border-ornament-b text-lg sm:text-xl">🌸</span>
+        </div>
+
+        <!-- Left Border Column -->
+        <div class="pointer-events-none absolute top-8 bottom-8 -left-3.5 flex flex-col items-center justify-between py-2 z-20">
+          <span class="border-ornament-b text-base sm:text-lg">💖</span>
+          <span class="border-ornament-a text-lg sm:text-xl">🌸</span>
+          <span class="border-ornament-b text-base sm:text-lg">💗</span>
+          <span class="border-ornament-a text-lg sm:text-xl">🌷</span>
+          <span class="border-ornament-b text-base sm:text-lg">💖</span>
+        </div>
+
+        <!-- Right Border Column -->
+        <div class="pointer-events-none absolute top-8 bottom-8 -right-3.5 flex flex-col items-center justify-between py-2 z-20">
+          <span class="border-ornament-a text-base sm:text-lg">💖</span>
+          <span class="border-ornament-b text-lg sm:text-xl">🌷</span>
+          <span class="border-ornament-a text-base sm:text-lg">💗</span>
+          <span class="border-ornament-b text-lg sm:text-xl">🌸</span>
+          <span class="border-ornament-a text-base sm:text-lg">💖</span>
+        </div>
+
+        <!-- Ambient Soft Inner Glow Orbs -->
+        <div class="pointer-events-none absolute inset-0 rounded-[2rem] overflow-hidden">
+          <div class="absolute -top-16 -right-16 h-44 w-44 rounded-full bg-gradient-to-br from-pink-300/55 via-rose-200/35 to-transparent blur-2xl"></div>
+          <div class="absolute -bottom-16 -left-16 h-44 w-44 rounded-full bg-gradient-to-tr from-sky-300/50 via-purple-200/35 to-transparent blur-2xl"></div>
+        </div>
+
+        <!-- TOP CENTERED PROMINENT HEADER: "Happy Women's Day 20/10" -->
+        <div class="relative text-center mb-5 pt-1">
+          <div class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-100/95 via-rose-100/95 to-pink-100/95 border border-pink-200/90 px-4 py-1 text-[11px] sm:text-xs font-bold uppercase tracking-widest text-pink-700 shadow-sm mb-2.5">
+            <span>✨</span> Ngày Phụ Nữ Việt Nam <span>✨</span>
+          </div>
+          <h1 class="font-serif-display title-glow-banner text-3xl sm:text-4xl font-bold tracking-wide leading-tight">
+            Happy Women's Day 20/10
+          </h1>
+          <div class="mt-2 flex items-center justify-center gap-2">
+            <span class="h-[1.5px] w-12 bg-gradient-to-r from-transparent to-pink-400"></span>
+            <span class="text-xs text-rose-500">🌸 💖 🌷</span>
+            <span class="h-[1.5px] w-12 bg-gradient-to-l from-transparent to-pink-400"></span>
+          </div>
+        </div>
+
+        <!-- Exclusive Curated Wish Content Box (Clean, button-free) -->
+        <div class="relative rounded-2xl bg-white/88 border border-pink-200/80 p-5 sm:p-6 shadow-inner">
+          <div class="space-y-3">
+            <p class="font-serif-display text-xl sm:text-2xl font-bold text-pink-700 italic">
+              Gửi cô Nhi và bác gái,
+            </p>
+            <p class="text-sm sm:text-[15.5px] leading-relaxed text-slate-700 font-medium">
+              Chúc em và mẹ em có một ngày 20/10 thật trọn vẹn, ấm áp và hạnh phúc! Mong bác gái luôn dồi dào sức khỏe, bình an mỗi ngày. Mong cô Nhi của anh luôn giữ mãi nụ cười tỏa nắng, ngày càng xinh đẹp và mãi là bông hoa ngọt ngào nhất trong lòng anh.
+            </p>
+            <div class="pt-3 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm border-t border-pink-100">
+              <span class="font-bold text-rose-600 tracking-wide">
+                🌷 Trọn vẹn yêu thương từ anh Kiệt • 20/10
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      // =========================================================================
+      // 1. STATE & FLOATING COMPLIMENTS
+      // =========================================================================
+      const FLOATING_COMPLIMENTS = [
+        "🌸 Chúc em & mẹ 20/10 thật hạnh phúc!",
+        "💖 Luôn rạng rỡ và xinh đẹp như hoa mùa thu!",
+        "🌷 Chúc bác gái luôn dồi dào sức khỏe, bình an!",
+        "✨ Nụ cười của em tỏa nắng cả bầu trời!",
+        "💐 Trọn vẹn yêu thương từ anh Kiệt • 20/10"
+      ];
+      let interactionCount = 0;
+      // Start with card closed and "Mở Thiệp 20/10" centered on screen
+      let isCardOpen = false;
+
+      // =========================================================================
+      // 2. SEAMLESS LINEAR VIDEO LOOP ENGINE (DUAL-BUFFER CROSSFADE)
+      //    Eliminates loop jump-cuts by smoothly crossfading end of stream into start
+      // =========================================================================
+      const videoA = document.getElementById('bg-video-a');
+      const videoB = document.getElementById('bg-video-b');
+      let activeVideo = videoA;
+      let standbyVideo = videoB;
+      let isCrossfading = false;
+      const CROSSFADE_SECONDS = 1.45;
+
+      function completeVideoSwap() {
+        standbyVideo.style.opacity = '1';
+        standbyVideo.style.zIndex = '2';
+        activeVideo.pause();
+        activeVideo.currentTime = 0;
+        activeVideo.style.opacity = '0';
+        activeVideo.style.zIndex = '1';
+
+        const temp = activeVideo;
+        activeVideo = standbyVideo;
+        standbyVideo = temp;
+        isCrossfading = false;
+      }
+
+      function initDualVideoSeamlessLoop() {
+        [videoA, videoB].forEach(function (v) {
+          if (!v) return;
+          v.muted = true;
+          v.playsInline = true;
+          v.addEventListener('ended', function () {
+            if (isCrossfading) {
+              completeVideoSwap();
+            } else {
+              v.currentTime = 0;
+              v.play().catch(function () {});
+            }
+          });
+        });
+
+        if (videoA) {
+          videoA.play().catch(function () {});
+        }
+      }
+
+      function updateSeamlessVideoCrossfade() {
+        if (!activeVideo || !standbyVideo) return;
+        const dur = activeVideo.duration;
+        if (!dur || !isFinite(dur) || dur <= CROSSFADE_SECONDS * 2) return;
+
+        const remaining = dur - activeVideo.currentTime;
+
+        if (remaining <= CROSSFADE_SECONDS && !isCrossfading) {
+          isCrossfading = true;
+          standbyVideo.currentTime = 0;
+          standbyVideo.style.zIndex = '3';
+          activeVideo.style.zIndex = '2';
+          standbyVideo.play().catch(function () {});
+        }
+
+        if (isCrossfading) {
+          const progress = Math.min(1, Math.max(0, 1 - remaining / CROSSFADE_SECONDS));
+          const alpha = 0.5 - 0.5 * Math.cos(progress * Math.PI);
+          standbyVideo.style.opacity = alpha.toFixed(3);
+
+          if (progress >= 0.985 || remaining <= 0.04 || activeVideo.ended) {
+            completeVideoSwap();
+          }
+        }
+      }
+
+      initDualVideoSeamlessLoop();
+
+      // =========================================================================
+      // 3. SYNTHESIZED NATURAL WIND & FLOWER COLLISION AUDIO (WEB AUDIO API)
+      //    Strictly muted video track; organic wind + soft petal brush acoustics
+      // =========================================================================
+      let audioCtx = null;
+      let windStarted = false;
+      let windGainNode = null;
+      let windFilterA = null;
+      let lastMoveSoundTime = 0;
+
+      function ensureAudioStarted() {
+        if (activeVideo && activeVideo.paused) {
+          activeVideo.play().catch(function () {});
+        }
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContextClass) return;
+          audioCtx = new AudioContextClass();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        if (!windStarted && audioCtx) {
+          windStarted = true;
+          startContinuousWindAmbience();
+        }
+      }
+
+      function startContinuousWindAmbience() {
+        if (!audioCtx) return;
+
+        const sampleRate = audioCtx.sampleRate;
+        const bufferSize = sampleRate * 5;
+        const noiseBuffer = audioCtx.createBuffer(2, bufferSize, sampleRate);
+
+        for (let ch = 0; ch < 2; ch++) {
+          const output = noiseBuffer.getChannelData(ch);
+          let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+          for (let i = 0; i < bufferSize; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.99886 * b0 + white * 0.0555179;
+            b1 = 0.99332 * b1 + white * 0.0750759;
+            b2 = 0.96900 * b2 + white * 0.1538520;
+            b3 = 0.86650 * b3 + white * 0.3104856;
+            b4 = 0.55000 * b4 + white * 0.5329522;
+            b5 = -0.7616 * b5 - white * 0.0168980;
+            output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.032;
+            b6 = white * 0.115926;
+          }
+        }
+
+        const noiseSource = audioCtx.createBufferSource();
+        noiseSource.buffer = noiseBuffer;
+        noiseSource.loop = true;
+
+        windFilterA = audioCtx.createBiquadFilter();
+        windFilterA.type = 'bandpass';
+        windFilterA.frequency.value = 320;
+        windFilterA.Q.value = 1.9;
+
+        const lowpass = audioCtx.createBiquadFilter();
+        lowpass.type = 'lowpass';
+        lowpass.frequency.value = 580;
+
+        windGainNode = audioCtx.createGain();
+        windGainNode.gain.value = 0.15;
+
+        const lfoFreq = audioCtx.createOscillator();
+        const lfoFreqGain = audioCtx.createGain();
+        lfoFreq.type = 'sine';
+        lfoFreq.frequency.value = 0.13;
+        lfoFreqGain.gain.value = 120;
+        lfoFreq.connect(lfoFreqGain);
+        lfoFreqGain.connect(windFilterA.frequency);
+
+        const lfoAmp = audioCtx.createOscillator();
+        const lfoAmpGain = audioCtx.createGain();
+        lfoAmp.type = 'sine';
+        lfoAmp.frequency.value = 0.085;
+        lfoAmpGain.gain.value = 0.055;
+        lfoAmp.connect(lfoAmpGain);
+        lfoAmpGain.connect(windGainNode.gain);
+
+        noiseSource.connect(windFilterA);
+        windFilterA.connect(lowpass);
+        lowpass.connect(windGainNode);
+        windGainNode.connect(audioCtx.destination);
+
+        noiseSource.start(0);
+        lfoFreq.start(0);
+        lfoAmp.start(0);
+
+        setInterval(function () {
+          if (audioCtx && audioCtx.state === 'running' && Math.random() < 0.65) {
+            playFlowerRustleCollision(0.3 + Math.random() * 0.4, 0.42);
+          }
+        }, 2800);
+      }
+
+      function playFlowerRustleCollision(normX, intensity) {
+        ensureAudioStarted();
+        if (!audioCtx || audioCtx.state !== 'running') return;
+
+        const now = audioCtx.currentTime;
+        const power = Math.min(1.2, Math.max(0.2, intensity || 0.7));
+
+        const rustleDur = 0.20 + Math.random() * 0.12;
+        const frameCount = Math.floor(audioCtx.sampleRate * rustleDur);
+        const rustleBuf = audioCtx.createBuffer(1, frameCount, audioCtx.sampleRate);
+        const data = rustleBuf.getChannelData(0);
+        for (let i = 0; i < frameCount; i++) {
+          const env = Math.sin((i / frameCount) * Math.PI);
+          data[i] = (Math.random() * 2 - 1) * env * 0.15 * power;
+        }
+
+        const rustleSrc = audioCtx.createBufferSource();
+        rustleSrc.buffer = rustleBuf;
+
+        const bandpass = audioCtx.createBiquadFilter();
+        bandpass.type = 'bandpass';
+        bandpass.frequency.setValueAtTime(1050 + normX * 600, now);
+        bandpass.frequency.exponentialRampToValueAtTime(650 + normX * 280, now + rustleDur);
+        bandpass.Q.value = 3.2;
+
+        const rustleGain = audioCtx.createGain();
+        rustleGain.gain.setValueAtTime(0.001, now);
+        rustleGain.gain.linearRampToValueAtTime(0.09 * power, now + rustleDur * 0.35);
+        rustleGain.gain.exponentialRampToValueAtTime(0.0001, now + rustleDur);
+
+        rustleSrc.connect(bandpass);
+        bandpass.connect(rustleGain);
+        rustleGain.connect(audioCtx.destination);
+        rustleSrc.start(now);
+
+        if (power >= 0.45) {
+          const scaleFreqs = [392.00, 440.00, 493.88, 587.33, 659.25, 783.99];
+          const baseFreq = scaleFreqs[Math.floor(Math.abs(normX * 10)) % scaleFreqs.length];
+
+          const osc = audioCtx.createOscillator();
+          const oscGain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(baseFreq * 0.97, now);
+          osc.frequency.exponentialRampToValueAtTime(baseFreq, now + 0.04);
+
+          oscGain.gain.setValueAtTime(0.0001, now);
+          oscGain.gain.linearRampToValueAtTime(0.024 * power, now + 0.018);
+          oscGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.36);
+
+          osc.connect(oscGain);
+          oscGain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.40);
+        }
+      }
+
+      // =========================================================================
+      // 4. 2D OPTICAL WATER RIPPLE OVERLAY (CLICK WAVES + CONTINUOUS CURSOR TRAIL)
+      // =========================================================================
+      const rippleCanvas = document.getElementById('ripple-canvas');
+      const rCtx = rippleCanvas.getContext('2d');
+      const waterRipples = [];
+      const waterDroplets = [];
+
+      function resizeRippleCanvas() {
+        rippleCanvas.width = window.innerWidth;
+        rippleCanvas.height = window.innerHeight;
+      }
+      resizeRippleCanvas();
+
+      function spawnWaterRipple2D(x, y, intensity, isTrail) {
+        const power = intensity || 1;
+        const ringCount = isTrail ? 2 : 3;
+        for (let i = 0; i < ringCount; i++) {
+          waterRipples.push({
+            x: x,
+            y: y,
+            radius: (isTrail ? 2 : 4) + i * (isTrail ? 6 : 11),
+            maxRadius: (isTrail ? 58 + i * 28 : 135 + i * 60) * power,
+            speed: (isTrail ? 1.85 - i * 0.25 : 2.85 - i * 0.42) * (0.9 + power * 0.2),
+            alpha: (isTrail ? 0.52 : 0.78) - i * 0.15,
+            lineWidth: (isTrail ? 2.2 - i * 0.5 : 3.6 - i * 0.8) * power,
+            hue: i === 0 ? '255, 255, 255' : (i === 1 ? '186, 230, 253' : '251, 207, 232')
+          });
+        }
+
+        const dropletCount = isTrail ? 2 : Math.floor(8 * power);
+        for (let d = 0; d < dropletCount; d++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = (isTrail ? 0.8 + Math.random() * 1.4 : 1.5 + Math.random() * 3.2) * power;
+          waterDroplets.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - (isTrail ? 0.9 : 2.2),
+            gravity: isTrail ? 0.06 : 0.12,
+            radius: isTrail ? 1.1 + Math.random() * 1.4 : 1.6 + Math.random() * 2.4,
+            alpha: isTrail ? 0.68 : 0.90,
+            color: d % 2 === 0 ? 'rgba(255,255,255,' : 'rgba(244,114,182,'
+          });
+        }
+      }
+
+      function updateAndDrawWaterRipples() {
+        rCtx.clearRect(0, 0, rippleCanvas.width, rippleCanvas.height);
+
+        for (let i = waterRipples.length - 1; i >= 0; i--) {
+          const rp = waterRipples[i];
+          rp.radius += rp.speed;
+          rp.alpha *= 0.965;
+          rp.lineWidth *= 0.984;
+
+          if (rp.radius >= rp.maxRadius || rp.alpha <= 0.018) {
+            waterRipples.splice(i, 1);
+            continue;
+          }
+
+          rCtx.save();
+          rCtx.beginPath();
+          rCtx.arc(rp.x, rp.y, rp.radius, 0, Math.PI * 2);
+          rCtx.strokeStyle = 'rgba(' + rp.hue + ',' + rp.alpha.toFixed(3) + ')';
+          rCtx.lineWidth = Math.max(0.6, rp.lineWidth);
+          rCtx.shadowColor = 'rgba(186, 230, 253, 0.75)';
+          rCtx.shadowBlur = 10;
+          rCtx.stroke();
+
+          if (rp.radius > 14) {
+            rCtx.beginPath();
+            rCtx.arc(rp.x, rp.y, rp.radius * 0.84, -0.4, Math.PI * 0.75);
+            rCtx.strokeStyle = 'rgba(255, 255, 255,' + (rp.alpha * 0.50).toFixed(3) + ')';
+            rCtx.lineWidth = Math.max(0.4, rp.lineWidth * 0.45);
+            rCtx.stroke();
+          }
+          rCtx.restore();
+        }
+
+        for (let j = waterDroplets.length - 1; j >= 0; j--) {
+          const dp = waterDroplets[j];
+          dp.x += dp.vx;
+          dp.y += dp.vy;
+          dp.vy += dp.gravity;
+          dp.alpha -= 0.024;
+
+          if (dp.alpha <= 0.02) {
+            waterDroplets.splice(j, 1);
+            continue;
+          }
+
+          rCtx.beginPath();
+          rCtx.arc(dp.x, dp.y, dp.radius, 0, Math.PI * 2);
+          rCtx.fillStyle = dp.color + dp.alpha.toFixed(3) + ')';
+          rCtx.fill();
+        }
+      }
+
+      // =========================================================================
+      // 5. THREE.JS SCENE WITH REAL SCULPTED 3D FLOWER PETALS (ZERO SQUARES!)
+      // =========================================================================
+      const container = document.getElementById('scene-container');
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera(54, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 10);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+
+      const hemiLight = new THREE.HemisphereLight(0xfff5f8, 0x487a3b, 1.38);
+      scene.add(hemiLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1.15);
+      dirLight.position.set(5, 10, 7);
+      scene.add(dirLight);
+
+      // Normalize ShapeGeometry UVs to [0, 1] so petal gradient maps from stem to tip
+      function normalizeGeometryUVs(geo) {
+        geo.computeBoundingBox();
+        const max = geo.boundingBox.max;
+        const min = geo.boundingBox.min;
+        const rangeX = (max.x - min.x) || 1;
+        const rangeY = (max.y - min.y) || 1;
+        const pos = geo.attributes.position;
+        const uvs = [];
+        for (let i = 0; i < pos.count; i++) {
+          const u = (pos.getX(i) - min.x) / rangeX;
+          const v = (pos.getY(i) - min.y) / rangeY;
+          uvs.push(u, v);
+        }
+        geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+      }
+
+      // Authentic 3D Curved Sakura Heart-Notched Petal Geometry
+      function createCurvedSakuraPetalGeometry() {
+        const shape = new THREE.Shape();
+        shape.moveTo(0, -0.36);
+        shape.bezierCurveTo(0.28, -0.22, 0.38, 0.08, 0.24, 0.30);
+        shape.bezierCurveTo(0.15, 0.40, 0.06, 0.36, 0, 0.25);
+        shape.bezierCurveTo(-0.06, 0.36, -0.15, 0.40, -0.24, 0.30);
+        shape.bezierCurveTo(-0.38, 0.08, -0.28, -0.22, 0, -0.36);
+
+        const geo = new THREE.ShapeGeometry(shape, 16);
+        const pos = geo.attributes.position;
+        for (let i = 0; i < pos.count; i++) {
+          const x = pos.getX(i);
+          const y = pos.getY(i);
+          const cupZ = -(x * x) * 0.65 + Math.sin((y + 0.36) * 3.6) * 0.075;
+          pos.setZ(i, cupZ);
+        }
+        normalizeGeometryUVs(geo);
+        geo.computeVertexNormals();
+        return geo;
+      }
+
+      // Authentic 3D Curved Rose/Tulip Teardrop Petal Geometry
+      function createCurvedRosePetalGeometry() {
+        const shape = new THREE.Shape();
+        shape.moveTo(0, -0.32);
+        shape.bezierCurveTo(0.32, -0.18, 0.38, 0.16, 0, 0.35);
+        shape.bezierCurveTo(-0.38, 0.16, -0.32, -0.18, 0, -0.32);
+
+        const geo = new THREE.ShapeGeometry(shape, 16);
+        const pos = geo.attributes.position;
+        for (let i = 0; i < pos.count; i++) {
+          const x = pos.getX(i);
+          const y = pos.getY(i);
+          const curlTip = y > 0.12 ? (y - 0.12) * 0.24 : 0;
+          const cupZ = -(x * x) * 0.70 + Math.cos(y * 3.0) * 0.06 - curlTip;
+          pos.setZ(i, cupZ);
+        }
+        normalizeGeometryUVs(geo);
+        geo.computeVertexNormals();
+        return geo;
+      }
+
+      const petalGeometries = [
+        createCurvedSakuraPetalGeometry(),
+        createCurvedRosePetalGeometry()
+      ];
+
+      function createPetalGradientTexture(topColor, midColor, baseColor) {
+        const c = document.createElement('canvas');
+        c.width = 128;
+        c.height = 128;
+        const ctx = c.getContext('2d');
+        const grad = ctx.createLinearGradient(0, 0, 0, 128);
+        grad.addColorStop(0, topColor);
+        grad.addColorStop(0.55, midColor);
+        grad.addColorStop(1, baseColor);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 128, 128);
+
+        // Subtle delicate botanical veins
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(64, 120);
+        ctx.quadraticCurveTo(64, 60, 64, 12);
+        ctx.moveTo(64, 100);
+        ctx.quadraticCurveTo(42, 65, 28, 30);
+        ctx.moveTo(64, 100);
+        ctx.quadraticCurveTo(86, 65, 100, 30);
+        ctx.stroke();
+
+        return new THREE.CanvasTexture(c);
+      }
+
+      const FLOWER_PALETTES = [
+        { top: '#ffe5ec', mid: '#ff8fab', base: '#d90429', emissive: 0xff6b93 },
+        { top: '#fff0f5', mid: '#ffb3c6', base: '#fb6f92', emissive: 0xff99ae },
+        { top: '#ffffff', mid: '#ffd6e0', base: '#ff758f', emissive: 0xffc2d1 },
+        { top: '#fffbeb', mid: '#fde68a', base: '#f59e0b', emissive: 0xffd166 },
+        { top: '#faf5ff', mid: '#e9d5ff', base: '#a855f7', emissive: 0xc084fc }
+      ];
+
+      const petalMaterials = FLOWER_PALETTES.map(function (p) {
+        return new THREE.MeshStandardMaterial({
+          map: createPetalGradientTexture(p.top, p.mid, p.base),
+          emissive: p.emissive,
+          emissiveIntensity: 0.26,
+          roughness: 0.34,
+          metalness: 0.04,
+          side: THREE.DoubleSide
+        });
+      });
+
+      const floatingPetalsGroup = new THREE.Group();
+      scene.add(floatingPetalsGroup);
+      const floatingPetals = [];
+
+      function spawnFloatingPetal(customPos, isBurst) {
+        const geo = petalGeometries[Math.floor(Math.random() * petalGeometries.length)];
+        const mat = petalMaterials[Math.floor(Math.random() * petalMaterials.length)];
+        const mesh = new THREE.Mesh(geo, mat);
+
+        if (customPos) {
+          mesh.position.copy(customPos);
+        } else {
+          mesh.position.set(
+            (Math.random() - 0.5) * 26,
+            (Math.random() - 0.5) * 16,
+            (Math.random() - 0.5) * 9
+          );
+        }
+
+        mesh.rotation.set(
+          Math.random() * Math.PI * 2,
+          Math.random() * Math.PI * 2,
+          Math.random() * Math.PI * 2
+        );
+
+        const s = 0.65 + Math.random() * 0.85;
+        mesh.scale.setScalar(s);
+        floatingPetalsGroup.add(mesh);
+
+        floatingPetals.push({
+          mesh: mesh,
+          vx: isBurst ? (Math.random() - 0.5) * 0.14 : (0.014 + Math.random() * 0.024),
+          vy: isBurst ? (0.03 + Math.random() * 0.11) : (-0.011 - Math.random() * 0.019),
+          vz: isBurst ? (Math.random() - 0.5) * 0.14 : ((Math.random() - 0.5) * 0.018),
+          rotSpeedX: (Math.random() - 0.5) * 0.045,
+          rotSpeedY: (Math.random() - 0.5) * 0.045,
+          rotSpeedZ: (Math.random() - 0.5) * 0.045,
+          swayOffset: Math.random() * Math.PI * 2,
+          isBurst: Boolean(isBurst),
+          life: isBurst ? 150 : 999999
+        });
+      }
+
+      // Populate initial 85 sculpted 3D petals drifting in the wind
+      for (let i = 0; i < 85; i++) {
+        spawnFloatingPetal(null, false);
+      }
+
+      // Interactive 3D Blooming Flowers on Click
+      const interactiveFlowers = [];
+      const centerCoreGeo = new THREE.SphereGeometry(0.15, 14, 12);
+      const centerCoreMat = new THREE.MeshStandardMaterial({
+        color: 0xffd166,
+        emissive: 0xffb703,
+        emissiveIntensity: 0.35,
+        roughness: 0.35
+      });
+
+      function createBloomingFlowerAt(pos) {
+        const root = new THREE.Group();
+        root.position.copy(pos);
+
+        const mat = petalMaterials[Math.floor(Math.random() * petalMaterials.length)];
+        const outerCount = 6;
+        for (let p = 0; p < outerCount; p++) {
+          const pivot = new THREE.Group();
+          pivot.rotation.z = (p / outerCount) * Math.PI * 2;
+          const petal = new THREE.Mesh(petalGeometries[0], mat);
+          petal.position.y = 0.28;
+          petal.rotation.x = 0.32;
+          pivot.add(petal);
+          root.add(pivot);
+        }
+
+        const innerCount = 5;
+        for (let p = 0; p < innerCount; p++) {
+          const pivot = new THREE.Group();
+          pivot.rotation.z = ((p + 0.5) / innerCount) * Math.PI * 2;
+          const petal = new THREE.Mesh(petalGeometries[1], mat);
+          petal.scale.setScalar(0.75);
+          petal.position.y = 0.20;
+          petal.rotation.x = 0.58;
+          petal.position.z = 0.05;
+          pivot.add(petal);
+          root.add(pivot);
+        }
+
+        const core = new THREE.Mesh(centerCoreGeo, centerCoreMat);
+        core.position.z = 0.08;
+        root.add(core);
+
+        root.rotation.x = (Math.random() - 0.5) * 0.5;
+        root.rotation.y = (Math.random() - 0.5) * 0.5;
+        root.scale.setScalar(0.01);
+        scene.add(root);
+
+        interactiveFlowers.push({
+          group: root,
+          currentScale: 0.01,
+          targetScale: 1.05 + Math.random() * 0.55,
+          life: 260
+        });
+      }
+
+      function screenToWorld3D(clientX, clientY, zDepth) {
+        const xNDC = (clientX / window.innerWidth) * 2 - 1;
+        const yNDC = -(clientY / window.innerHeight) * 2 + 1;
+        return new THREE.Vector3(xNDC * 7.5, yNDC * 4.6, zDepth || 1.2);
+      }
+
+      function spawnFloatingComplimentTag(screenX, screenY) {
+        const holder = document.getElementById('floating-labels-container');
+        if (!holder) return;
+        const tag = document.createElement('div');
+        tag.className = 'floating-label glass-pill rounded-full px-4 py-1.5 text-xs font-bold text-pink-700 shadow-md border border-pink-200 whitespace-nowrap';
+        tag.style.left = Math.max(90, Math.min(window.innerWidth - 90, screenX)) + 'px';
+        tag.style.top = Math.max(60, Math.min(window.innerHeight - 60, screenY)) + 'px';
+        tag.textContent = FLOATING_COMPLIMENTS[interactionCount % FLOATING_COMPLIMENTS.length];
+        holder.appendChild(tag);
+
+        requestAnimationFrame(function () {
+          tag.style.transform = 'translate(-50%, -220%) scale(1.05)';
+          tag.style.opacity = '0';
+        });
+        setTimeout(function () {
+          if (tag.parentNode) tag.parentNode.removeChild(tag);
+        }, 1450);
+      }
+
+      function handleClickInteractionAt(clientX, clientY, intensity) {
+        ensureAudioStarted();
+        spawnWaterRipple2D(clientX, clientY, intensity || 1.05, false);
+
+        const worldPos = screenToWorld3D(clientX, clientY, 1.5 + (Math.random() - 0.5) * 1.5);
+        createBloomingFlowerAt(worldPos);
+
+        for (let b = 0; b < 8; b++) {
+          spawnFloatingPetal(
+            new THREE.Vector3(
+              worldPos.x + (Math.random() - 0.5) * 1.4,
+              worldPos.y + (Math.random() - 0.5) * 1.4,
+              worldPos.z + (Math.random() - 0.5) * 1.4
+            ),
+            true
+          );
+        }
+
+        interactionCount++;
+        spawnFloatingComplimentTag(clientX, clientY);
+        playFlowerRustleCollision(clientX / window.innerWidth, intensity || 0.85);
+      }
+
+      // =========================================================================
+      // 6. 2.5D PARALLAX SCENE ROTATION, CONTINUOUS MOVE RIPPLES & CARD CONTROLS
+      // =========================================================================
+      const videoParallaxRig = document.getElementById('video-parallax-rig');
+      const bokehLayer = document.getElementById('bokeh-layer');
+      const openCardPrompt = document.getElementById('open-card-prompt');
+      const btnOpenCard = document.getElementById('btn-open-card');
+      const cardWrapper = document.getElementById('greeting-card-wrapper');
+      const cardInner = document.getElementById('greeting-card-inner');
+
+      let targetNormX = 0;
+      let targetNormY = 0;
+      let currentNormX = 0;
+      let currentNormY = 0;
+
+      let lastTrailX = -999;
+      let lastTrailY = -999;
+      let lastTrailTime = 0;
+      let promptFadeTimer = null;
+      let isHoveringOpenBtn = false;
+
+      btnOpenCard.addEventListener('pointerenter', function () {
+        isHoveringOpenBtn = true;
+        if (!isCardOpen) {
+          openCardPrompt.style.opacity = '1';
+        }
+        if (promptFadeTimer) clearTimeout(promptFadeTimer);
+      });
+
+      btnOpenCard.addEventListener('pointerleave', function () {
+        isHoveringOpenBtn = false;
+      });
+
+      function setCardOpenState(open) {
+        isCardOpen = open;
+        if (isCardOpen) {
+          cardWrapper.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+          cardWrapper.classList.add('pointer-events-auto');
+          openCardPrompt.style.opacity = '0';
+          openCardPrompt.classList.add('pointer-events-none');
+          btnOpenCard.classList.remove('pointer-events-auto');
+          btnOpenCard.classList.add('pointer-events-none');
+        } else {
+          cardWrapper.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+          cardWrapper.classList.remove('pointer-events-auto');
+          openCardPrompt.style.opacity = '1';
+          btnOpenCard.classList.add('pointer-events-auto');
+          btnOpenCard.classList.remove('pointer-events-none');
+        }
+      }
+
+      // Open Card when clicking the centered "Mở Thiệp 20/10" button
+      btnOpenCard.addEventListener('click', function (e) {
+        e.stopPropagation();
+        ensureAudioStarted();
+        setCardOpenState(true);
+        spawnWaterRipple2D(window.innerWidth * 0.5, window.innerHeight * 0.5, 1.25, false);
+        playFlowerRustleCollision(0.5, 0.9);
+      });
+
+      // Prevent clicks inside the greeting card from closing it
+      cardInner.addEventListener('pointerdown', function (e) {
+        e.stopPropagation();
+        ensureAudioStarted();
+        spawnWaterRipple2D(e.clientX, e.clientY, 0.85, true);
+        playFlowerRustleCollision(e.clientX / window.innerWidth, 0.5);
+      });
+
+      // Clicking outside the card when it is open closes the card and restores centered "Mở Thiệp"
+      cardWrapper.addEventListener('pointerdown', function (e) {
+        if (isCardOpen && !cardInner.contains(e.target)) {
+          setCardOpenState(false);
+          handleClickInteractionAt(e.clientX, e.clientY, 1.05);
+        }
+      });
+
+      // Clicking on the background scene
+      container.addEventListener('pointerdown', function (e) {
+        if (isCardOpen) {
+          setCardOpenState(false);
+        }
+        handleClickInteractionAt(e.clientX, e.clientY, 1.15);
+      });
+
+      // Fade out centered "Mở Thiệp" text when user rotates/pans the 2.5D scene
+      function fadePromptDuringSceneRotation(clientX, clientY) {
+        if (isCardOpen || isHoveringOpenBtn) return;
+
+        const dxCenter = clientX - window.innerWidth * 0.5;
+        const dyCenter = clientY - window.innerHeight * 0.5;
+        const distFromCenter = Math.hypot(dxCenter, dyCenter);
+
+        if (distFromCenter < 115) {
+          openCardPrompt.style.opacity = '1';
+          if (promptFadeTimer) clearTimeout(promptFadeTimer);
+          return;
+        }
+
+        // Smoothly fade prompt while rotating/looking around the 2.5D scene
+        openCardPrompt.style.opacity = '0.06';
+
+        if (promptFadeTimer) clearTimeout(promptFadeTimer);
+        promptFadeTimer = setTimeout(function () {
+          if (!isCardOpen) {
+            openCardPrompt.style.opacity = '1';
+          }
+        }, 750);
+      }
+
+      // Continuous pointermove for 2.5D parallax + continuous water ripple trail
+      window.addEventListener('pointermove', function (e) {
+        const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+        const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+        targetNormX = nx;
+        targetNormY = ny;
+
+        // 1. Fade out "Mở Thiệp" while rotating/looking around the 2.5D scene
+        fadePromptDuringSceneRotation(e.clientX, e.clientY);
+
+        // 2. Continuous water ripples following cursor movement everywhere
+        const now = performance.now();
+        const distMoved = Math.hypot(e.clientX - lastTrailX, e.clientY - lastTrailY);
+        if (distMoved > 15 && now - lastTrailTime > 30) {
+          lastTrailX = e.clientX;
+          lastTrailY = e.clientY;
+          lastTrailTime = now;
+
+          const speedFactor = Math.min(1.25, Math.max(0.65, distMoved / 40));
+          spawnWaterRipple2D(e.clientX, e.clientY, speedFactor, true);
+
+          // Spawn a trailing 3D petal along cursor path occasionally
+          if (Math.random() < 0.42 && floatingPetals.length < 155) {
+            const trailWorldPos = screenToWorld3D(e.clientX, e.clientY, 1.8);
+            spawnFloatingPetal(trailWorldPos, true);
+          }
+
+          // Subtle flower rustle sound when sweeping fast
+          if (distMoved > 46 && now - lastMoveSoundTime > 250) {
+            lastMoveSoundTime = now;
+            if (windStarted) {
+              playFlowerRustleCollision(e.clientX / window.innerWidth, 0.35);
+            }
+          }
+        }
+
+        // 3. 3D tilt on card if open
+        if (cardInner && isCardOpen) {
+          cardInner.style.transform =
+            'rotateY(' + (nx * 4.5).toFixed(2) + 'deg) rotateX(' + (-ny * 4.5).toFixed(2) + 'deg)';
+        }
+      });
+
+      // =========================================================================
+      // 7. ANIMATION LOOP (60 FPS)
+      // =========================================================================
+      const clock = new THREE.Clock();
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const elapsed = clock.getElapsedTime();
+
+        // 1. Seamless Linear Video Crossfade Check
+        updateSeamlessVideoCrossfade();
+
+        // 2. Smooth 2.5D Parallax Interpolation (Video Rig + 3D Camera + Bokeh)
+        currentNormX += (targetNormX - currentNormX) * 0.065;
+        currentNormY += (targetNormY - currentNormY) * 0.065;
+
+        if (videoParallaxRig) {
+          const rotY = (-currentNormX * 6.5).toFixed(2);
+          const rotX = (currentNormY * 5.2).toFixed(2);
+          const panX = (-currentNormX * 28).toFixed(1);
+          const panY = (-currentNormY * 20).toFixed(1);
+          videoParallaxRig.style.transform =
+            'rotateY(' + rotY + 'deg) rotateX(' + rotX + 'deg) translate3d(' + panX + 'px, ' + panY + 'px, 0)';
+        }
+
+        if (bokehLayer) {
+          const bPanX = (currentNormX * 36).toFixed(1);
+          const bPanY = (currentNormY * 26).toFixed(1);
+          bokehLayer.style.transform = 'translate3d(' + bPanX + 'px, ' + bPanY + 'px, 0)';
+        }
+
+        // Subtle 2.5D camera shift in Three.js
+        camera.position.x = currentNormX * 1.15;
+        camera.position.y = -currentNormY * 0.85;
+        camera.lookAt(0, 0, 0);
+
+        // 3. Interactive blooming 3D flowers
+        for (let f = interactiveFlowers.length - 1; f >= 0; f--) {
+          const item = interactiveFlowers[f];
+          if (item.currentScale < item.targetScale) {
+            item.currentScale += (item.targetScale - item.currentScale) * 0.09;
+            item.group.scale.setScalar(item.currentScale);
+          }
+          item.group.rotation.z += 0.006;
+          item.life--;
+          if (item.life <= 0) {
+            scene.remove(item.group);
+            interactiveFlowers.splice(f, 1);
+          }
+        }
+
+        // 4. Sculpted 3D Petals drifting in the wind
+        for (let p = floatingPetals.length - 1; p >= 0; p--) {
+          const pt = floatingPetals[p];
+          pt.mesh.position.x += pt.vx + Math.cos(elapsed * 1.5 + pt.swayOffset) * 0.005;
+          pt.mesh.position.y += pt.vy + Math.sin(elapsed * 2.1 + pt.swayOffset) * 0.006;
+          pt.mesh.position.z += pt.vz;
+
+          pt.mesh.rotation.x += pt.rotSpeedX;
+          pt.mesh.rotation.y += pt.rotSpeedY;
+          pt.mesh.rotation.z += pt.rotSpeedZ;
+
+          if (pt.isBurst) {
+            pt.life--;
+            if (pt.life <= 0) {
+              floatingPetalsGroup.remove(pt.mesh);
+              floatingPetals.splice(p, 1);
+              continue;
+            }
+          } else {
+            if (pt.mesh.position.x > 14) pt.mesh.position.x = -14;
+            if (pt.mesh.position.x < -14) pt.mesh.position.x = 14;
+            if (pt.mesh.position.y < -9) pt.mesh.position.y = 9;
+            if (pt.mesh.position.y > 9) pt.mesh.position.y = -9;
+          }
+        }
+
+        renderer.render(scene, camera);
+        updateAndDrawWaterRipples();
+      }
+
+      window.addEventListener('resize', function () {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        resizeRippleCanvas();
+      });
+
+      window.onload = function () {
+        animate();
+        setTimeout(function () {
+          spawnWaterRipple2D(window.innerWidth * 0.5, window.innerHeight * 0.5, 1.15, false);
+        }, 350);
+      };
+    })();
+  </script>
+</body>
+</html>
